@@ -6,30 +6,6 @@ Const COL_START_ROW As Long = 7 'カラム情報は7行目からスタート
 Const TBL_START_ROW As Long = 5 'テーブル情報は5行目からスタート
 Const SHEET_TABLE_LIST As String = "テーブル一覧表" 'テーブル一覧表のシート名
 
-'項目情報の構造体
-Type typeTable
-    lngNo           As Long     'No
-    strLogicalName  As String   '論理名
-    strPhysicsName  As String   '物理名
-    strSchema       As String   'スキーマ名
-    strHistoryFlag  As String   '履歴作成フラグ(要/否)
-    strKind         As String   'テーブル種類
-End Type
-
-'項目情報の構造体
-Type typeColumn
-    lngNo           As Long     'No
-    strLogicalName  As String   '論理名
-    strPhysicsName  As String   '物理名
-    strDataType     As String   'データ型
-    lngLength       As Long     'データ桁数
-    lngDecimal      As Long     '小数桁数
-    strRequiredFlag As String   '必須区分
-    strPrimaryKey   As String   '主キー
-    strDefalutData  As String   'デフォルト値
-    strRemarks      As String   '備考
-End Type
-
 Public strSchemaName As String  'スキーマ名
 
 'テーブル一覧表シートのテーブルスクリプトを出力。
@@ -157,20 +133,18 @@ End Sub
 Private Sub makePythonFile()
 On Error GoTo Err0
 
-    Dim tTbl As typeTable           'テーブル情報
-    Dim arrColumn() As typeColumn   'カラム情報
+    Dim tTbl As getTableData.typeTable           'テーブル情報
+    Dim arrColumn() As getTableData.typeColumn   'カラム情報
     Dim strBuf As String
     strBuf = ""
     
     '-------------------------------------------------------------------------------
-    'アクティブのシートからテーブルとカラム情報を取得
-    Call getTableData(tTbl, arrColumn)
-    
-    'テーブル情報を要素クラスのPythonファイルを作成
-    Call outputPythonEntity(tTbl, arrColumn)
-    Call outputPythonDao(tTbl, arrColumn)
-
-
+'    'アクティブのシートからテーブルとカラム情報を取得
+    Call getTableData.getTableData(tTbl, arrColumn)
+'
+'    'テーブル情報を要素クラスのPythonファイルを作成
+    Call MakePythonEntityModule.outputPythonEntity(tTbl, arrColumn)
+    Call MakePythonDaoModule.outputPythonDao(tTbl, arrColumn)
     '-------------------------------------------------------------------------------
 
     Exit Sub

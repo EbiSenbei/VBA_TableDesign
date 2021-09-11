@@ -14,6 +14,7 @@ Type typeTable
     strSchema       As String   'スキーマ名
     strHistoryFlag  As String   '履歴作成フラグ(要/否)
     strKind         As String   'テーブル種類
+    strOverview     As String   'テーブル内容
 End Type
 
 '項目情報の構造体
@@ -33,7 +34,7 @@ End Type
 Public strSchemaName As String  'スキーマ名
 
 'テーブル・カラム情報を取得
-Private Sub getTableData(ByRef tTbl As typeTable, ByRef arrColumn() As typeColumn)
+Public Sub getTableData(ByRef tTbl As typeTable, ByRef arrColumn() As typeColumn)
 On Error GoTo Err0
     'アクティブなシートを取得する。
     Dim wsActSheet As Worksheet
@@ -49,6 +50,7 @@ On Error GoTo Err0
     tTbl.strPhysicsName = Trim(wsActSheet.Range("C4").Value)  'テーブル名(英字)
     tTbl.strSchema = SCHMA_NAME                               'スキーマ名
     tTbl.strHistoryFlag = Trim(wsActSheet.Range("I2").Value)  '履歴作成フラグ(要/否)
+    tTbl.strOverview = Trim(wsActSheet.Range("D4").Value)     'テーブル内容
 
     '--------------------------------------------------------------------------------------
     'アクティブなシートからカラム情報を取得する

@@ -6,34 +6,11 @@ Const COL_START_ROW As Long = 7 'カラム情報は7行目からスタート
 Const TBL_START_ROW As Long = 5 'テーブル情報は5行目からスタート
 Const SHEET_TABLE_LIST As String = "テーブル一覧表" 'テーブル一覧表のシート名
 
-'項目情報の構造体
-Type typeTable
-    lngNo           As Long     'No
-    strLogicalName  As String   '論理名
-    strPhysicsName  As String   '物理名
-    strSchema       As String   'スキーマ名
-    strHistoryFlag  As String   '履歴作成フラグ(要/否)
-    strKind         As String   'テーブル種類
-End Type
-
-'項目情報の構造体
-Type typeColumn
-    lngNo           As Long     'No
-    strLogicalName  As String   '論理名
-    strPhysicsName  As String   '物理名
-    strDataType     As String   'データ型
-    lngLength       As Long     'データ桁数
-    lngDecimal      As Long     '小数桁数
-    strRequiredFlag As String   '必須区分
-    strPrimaryKey   As String   '主キー
-    strDefalutData  As String   'デフォルト値
-    strRemarks      As String   '備考
-End Type
 
 Public strSchemaName As String  'スキーマ名
 
 'テーブル情報を元に要素(Entity)クラスのpythonファイルを出力
-Private Sub outputPythonEntity(ByRef tTbl As typeTable, ByRef arrColumn() As typeColumn)
+Public Sub outputPythonEntity(ByRef tTbl As getTableData.typeTable, ByRef arrColumn() As getTableData.typeColumn)
 On Error GoTo Err0
     'アクティブなシートを取得する。
     Dim wsActSheet As Worksheet
