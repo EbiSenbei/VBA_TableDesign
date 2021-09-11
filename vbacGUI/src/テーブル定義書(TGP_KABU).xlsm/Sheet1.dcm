@@ -1,0 +1,28 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "Sheet1"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Private Sub cmdBtn_Click()
+    
+    If MsgBox("一覧作成しますか？", vbQuestion & vbOKCancel, "確認") = vbOK Then
+        MaxSheets = Sheets.count
+        Call mSelectSheet
+        ThisWorkbook.Worksheets(1).Activate
+        Call mHyperLink
+        ThisWorkbook.Worksheets(1).Activate
+        Call mHyperLink2
+        
+        Worksheets(1).Activate
+        Range("A1").Select
+        
+        MsgBox "終了しました", vbInformation, "終了"
+        
+    End If
+    
+End Sub
+
