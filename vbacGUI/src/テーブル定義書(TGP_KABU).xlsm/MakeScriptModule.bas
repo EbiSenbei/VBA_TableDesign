@@ -367,11 +367,14 @@ On Error GoTo Err0
         strSql = strSql + "EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'" _
             + arrColumn(i).strLogicalName + "' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'" _
             + tTbl.strPhysicsName + "', @level2type=N'COLUMN',@level2name=N'" + arrColumn(i).strPhysicsName + "'" + vbCrLf _
-            + "Go" + vbCrLf
-    
-        
+            + "Go" + vbCrLf        
     Next i
     
+    strSql = strSql + "EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'" + tTbl.strLogicalName _
+        + "' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'" + tTbl.strPhysicsName + "'"+ vbCrLf
+    strSql = strSql + "GO" + vbCrLf   
+
+
    '--------------------------------------------------------------------------------------
     'スクリプトの出力
     Dim datFile As String
