@@ -5,7 +5,7 @@ Const SCHMA_NAME As String = "" 'スキーマ名
 Const COL_START_ROW As Long = 7 'カラム情報は7行目からスタート
 Const TBL_START_ROW As Long = 5 'テーブル情報は5行目からスタート
 Const SHEET_TABLE_LIST As String = "テーブル一覧表" 'テーブル一覧表のシート名
-
+Const INDENT_SPACE As Long = 100 '論理名コメントを記載するための半角スペース
 
 Public strSchemaName As String  'スキーマ名
 
@@ -159,8 +159,13 @@ On Error GoTo Err0
             On Error GoTo Err0
         End If
         
-        strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
-      
+        strTextLine = strTextLine + " + ""\n"" " 
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
     Next i
     
     
@@ -207,7 +212,13 @@ On Error GoTo Err0
             On Error GoTo Err0
         End If
         
-        strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        strTextLine = strTextLine + " + ""\n"" " 
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
       
     Next i
     
@@ -292,7 +303,14 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" " 
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -326,7 +344,14 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" " 
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -382,7 +407,14 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" " 
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -570,7 +602,14 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" " 
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -605,7 +644,14 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" " 
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -691,9 +737,16 @@ On Error GoTo Err0
         Else
             strTextLine = strTextLine + "            sql += ""    ,"
         End If
+        ' 項目名の物理名を記述
         strTextLine = strTextLine + arrColumn(i).strPhysicsName
-        
-        strText = strText + strTextLine + """ + "" \n"" " + vbCrLf
+        strTextLine = strTextLine + """ + "" \n"" " 
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
+
     Next i
     ' FROM句
     strText = strText + "            sql += ""FROM " + tTbl.strPhysicsName + " \n """ + vbCrLf
@@ -719,7 +772,13 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            strTextLine = strTextLine + " + ""\n"" "
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
             count = count + 1
         End If
     Next i
@@ -748,7 +807,13 @@ On Error GoTo Err0
         Else
             On Error GoTo Err0
         End If
-        strText = strText + strTextLine + String(91 - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
         
     Next i
     strText = strText + "            else: " + vbCrLf
