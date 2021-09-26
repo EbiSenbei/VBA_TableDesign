@@ -699,6 +699,225 @@ On Error GoTo Err0
 
     ' 参照処理-----------------------------------------------------------------------------------------
     strText = strText + "    # " + tTbl.strLogicalName + "への参照処理 " + vbCrLf
+    strText = strText + "    def selectDataFrame" + tTbl.strPhysicsName + "(self"
+    ' 関数の引数部分を設定
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        If arrColumn(i).strPrimaryKey <> "" Then
+            
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + ":" + "str"
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName + ":" + "int"
+            ElseIf (arrColumn(i).strDataType = "float") Then
+               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName + ":" + "float"
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName + ":" + "str"
+            Else
+                On Error GoTo Err0
+            End If
+        End If
+        
+        strText = strText + strTextLine
+    Next i
+    strText = strText + "):" + vbCrLf
+    strText = strText + vbCrLf
+    strText = strText + "        try: " + vbCrLf
+    strText = strText + "            sql: str = """"" + vbCrLf
+    
+    ' SELECT文-----------------------------------------------------------------------------------------
+    ' SELECT句
+    strText = strText + "            sql += ""SELECT"" + ""\n""" + "  " + vbCrLf
+    '項目指定部分
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        '主キーの項目を指定。
+        If i = 0 Then
+            strTextLine = strTextLine + "            sql += ""     "
+        Else
+            strTextLine = strTextLine + "            sql += ""    ,"
+        End If
+        ' 項目名の物理名を記述
+        strTextLine = strTextLine + arrColumn(i).strPhysicsName
+        strTextLine = strTextLine + """ + "" \n"" " 
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
+
+    Next i
+    ' FROM句
+    strText = strText + "            sql += ""FROM " + tTbl.strPhysicsName + " \n """ + vbCrLf
+    ' WHERE句部分
+    strText = strText + "            sql += ""WHERE 1 = 1 \n """ + vbCrLf
+    count = 0
+    For i = 0 To lngLineCount - 1
+    
+        If arrColumn(i).strPrimaryKey <> "" Then
+        '主キーの項目を指定。
+            strTextLine = ""
+            strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
+                  
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + " + ""'"" " + "+ str(" + "date" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strTextLine + " + int(" + "int" + arrColumn(i).strPhysicsName + ")"
+            ElseIf (arrColumn(i).strDataType = "float") Then
+                strTextLine = strTextLine + " + " + "flt" + arrColumn(i).strPhysicsName + ""
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+                strTextLine = strTextLine + " + ""N'"" " + "+ str(" + "str" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+            Else
+                On Error GoTo Err0
+            End If
+            
+            strTextLine = strTextLine + " + ""\n"" "
+            ' 項目名の論理名を記述
+            if Len(strTextLine) < INDENT_SPACE then
+                strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+            End If
+            count = count + 1
+        End If
+    Next i
+    
+    'SQLを実行
+    strText = strText + "" + vbCrLf
+    strText = strText + "            # SQLを実行" + vbCrLf
+    strText = strText + "            df = self.sqlCon.executeSql(sql)" + vbCrLf
+    strText = strText + "" + vbCrLf
+    strText = strText + "            if len(df) > 0: " + vbCrLf
+    strText = strText + "                return df " + vbCrLf
+    strText = strText + "            else: " + vbCrLf
+    strText = strText + "                return None " + vbCrLf
+    strText = strText + "        except Exception as e: " + vbCrLf            
+    strText = strText + "            print('Error:' + str(e)) " + vbCrLf   
+    strText = strText + "            raise e " + vbCrLf   
+    strText = strText + vbCrLf
+
+    '-------------------------------------------------------------------------------------------------------------------------
+    strText = strText + "    # " + tTbl.strLogicalName + "への参照処理 " + vbCrLf
+    strText = strText + "    def selectEntityList" + tTbl.strPhysicsName + "(self"
+    ' 関数の引数部分を設定
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        If arrColumn(i).strPrimaryKey <> "" Then    
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + ":" + "str"
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName + ":" + "int"
+            ElseIf (arrColumn(i).strDataType = "float") Then
+               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName + ":" + "float"
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName + ":" + "str"
+            Else
+                On Error GoTo Err0
+            End If
+        End If     
+        strText = strText + strTextLine
+    Next i
+    strText = strText + "):" + vbCrLf
+
+    strText = strText + "        try:" + vbCrLf
+    strText = strText + "            df = self.selectDataframe" + tTbl.strPhysicsName + "("
+    strtmp = ""
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        If arrColumn(i).strPrimaryKey <> "" Then    
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName 
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName 
+            ElseIf (arrColumn(i).strDataType = "float") Then
+               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName 
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName 
+            Else
+                On Error GoTo Err0
+            End If
+        End If     
+        strtmp = strtmp + strTextLine
+    Next i
+    strtmp = Right(strtmp,LEN(strtmp)-1)
+    strText = strText + strtmp
+
+    strText = strText + ")" + vbCrLf
+    strText = strText + vbCrLf
+
+    strText = strText + "            # SQL実行結果を取得" + vbCrLf
+    strText = strText + "            entityResult: " + tTbl.strPhysicsName + "_Entity" + " = " + tTbl.strPhysicsName + "_Entity()" + vbCrLf
+    strText = strText + "            entityList = [] " + vbCrLf    
+    strText = strText + "            i = 0 " + vbCrLf
+
+    strText = strText + "            if len(df) > 0: " + vbCrLf
+    strText = strText + "                for i in range(len(df)): " + vbCrLf
+    strText = strText + "                    entityResult = " + tTbl.strPhysicsName + "_Entity()" + vbCrLf
+    'SQLを実行結果を取得
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        strTextLine = strTextLine + "                    entityResult."
+        If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+            strTextLine = strTextLine + "date" + arrColumn(i).strPhysicsName + " = df.loc[0,""" + arrColumn(i).strPhysicsName + """]"
+        ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+            strTextLine = strTextLine + "int" + arrColumn(i).strPhysicsName + " = df.loc[0,""" + arrColumn(i).strPhysicsName + """]"
+        ElseIf (arrColumn(i).strDataType = "float") Then
+            strTextLine = strTextLine + "flt" + arrColumn(i).strPhysicsName + " = df.loc[0,""" + arrColumn(i).strPhysicsName + """]"
+        ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+            strTextLine = strTextLine + "str" + arrColumn(i).strPhysicsName + " = df.loc[0,""" + arrColumn(i).strPhysicsName + """]"
+        Else
+            On Error GoTo Err0
+        End If
+        
+        ' 項目名の論理名を記述
+        if Len(strTextLine) < INDENT_SPACE then
+            strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " # " + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " # " + arrColumn(i).strLogicalName + vbCrLf
+        End If
+        
+    Next i
+    strText = strText + "            else: " + vbCrLf
+    strText = strText + "                entityResult = None" + vbCrLf
+    strText = strText + "" + vbCrLf
+    strText = strText + "            return entityResult" + vbCrLf
+    strText = strText + "        except Exception as e:" + vbCrLf
+    strText = strText + "            print(""Error:"" + str(e))" + vbCrLf
+    strText = strText + "            raise e " + vbCrLf
+    strText = strText + "" + vbCrLf
+    strText = strText + "" + vbCrLf
+    outputPythonDao_Select = strText
+    Exit Function
+Err0:
+    MsgBox Error
+    Application.ScreenUpdating = True
+    
+End Function
+
+'テーブル情報を元にDB処理(Dao)クラス(python)のSelect文の処理の文字列を作成
+Private Function outputPythonDao_Select2(ByRef tTbl As getTableData.typeTable, ByRef arrColumn() As getTableData.typeColumn) As String
+On Error GoTo Err0
+
+    'アクティブなシートを取得する。
+    Dim wsActSheet As Worksheet
+    Set wsActSheet = ActiveSheet
+    Dim strActSheetName As String
+    strActSheetName = ActiveSheet.Name
+    Dim strClassName As String
+    strClassName = tTbl.strPhysicsName + "_Dao"  'クラス名
+    
+    '対象件数(カラム数)を取得する。
+    Dim lngMaxLine As Long
+    Dim lngLineCount As Long
+    lngLineCount = UBound(arrColumn) - 1
+    lngMaxLine = lngLineCount + COL_START_ROW - 1
+    
+    Dim strText As String
+    strText = ""
+
+    ' 参照処理-----------------------------------------------------------------------------------------
+    strText = strText + "    # " + tTbl.strLogicalName + "への参照処理 " + vbCrLf
     strText = strText + "    def select" + tTbl.strPhysicsName + "(self"
     ' 関数の引数部分を設定
     For i = 0 To lngLineCount - 1
