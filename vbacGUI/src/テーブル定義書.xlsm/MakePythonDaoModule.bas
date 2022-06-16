@@ -141,24 +141,30 @@ On Error GoTo Err0
         End If
         'メンバー変数
         
-        If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "MAKE_DT") Then
+        If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "MAKE_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Or (arrColumn(i).strPhysicsName = "MAKE_D") Then
             'MAKE_DT/UP_DTの場合は、[sysDateTime]をセット
             strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-        ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+        ElseIf (arrColumn(i).strPhysicsName = "SHORI_KBN") Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
             'SHORI_KBNかつ、新規登録の場合は、1(新規登録)をセット
              strTextLine = strTextLine + " + ""'1'"" "
         ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "float") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
         Else
             On Error GoTo Err0
         End If
-        strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+
+        If (INDENT_SPACE > Len(strTextLine)) Then
+            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+        End If
+
       
     Next i
     
@@ -188,25 +194,29 @@ On Error GoTo Err0
         End If
         'メンバー変数
         
-        If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "MAKE_DT") Then
+        If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "MAKE_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Or (arrColumn(i).strPhysicsName = "MAKE_D") Then
             'MAKE_DT/UP_DTの場合は、[sysDateTime]をセット
             strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-        ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+        ElseIf (arrColumn(i).strPhysicsName = "SHORI_KBN") Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
             'SHORI_KBNかつ、新規登録の場合は、1(新規登録)をセット
              strTextLine = strTextLine + " + ""'1'"" "
         ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "float") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData.entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
         Else
             On Error GoTo Err0
         End If
         
-        strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        If (INDENT_SPACE > Len(strTextLine)) Then
+            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+        End If
       
     Next i
     
@@ -273,25 +283,30 @@ On Error GoTo Err0
             End If
             
             
-            If (arrColumn(i).strPhysicsName = "UP_DT") Then
+            If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Then
                 'MAKE_DT/UP_DTの場合は、[sysDateTime]をセット
                 strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+            ElseIf (arrColumn(i).strPhysicsName = "SHORI_KBN") Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
                 'SHORI_KBNかつ、新規登録の場合は、2(訂正)をセット
                  strTextLine = strTextLine + " + ""'2'"" "
             ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + " + str(entityData." + "date" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + str(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + str(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + " + str(entityData." + "str" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            If (INDENT_SPACE > Len(strTextLine)) Then
+                strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+            End If
+            
             count = count + 1
         End If
     Next i
@@ -307,20 +322,14 @@ On Error GoTo Err0
             strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
             
             
-            If (arrColumn(i).strPhysicsName = "UP_DT") Then
-                'MAKE_DT/UP_DTの場合は、[sysDateTime]をセット
-                strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
-                'SHORI_KBNかつ、新規登録の場合は、2(訂正)をセット
-                 strTextLine = strTextLine + " + ""'2'"" "
-            ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + " + str(entityData." + "date" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + str(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + str(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + " + str(entityData." + "str" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
@@ -363,25 +372,26 @@ On Error GoTo Err0
             strTextLine = ""
             strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
                   
-            If (arrColumn(i).strPhysicsName = "UP_DT") Then
-                'MAKE_DT/UP_DTの場合は、[sysDateTime]をセット
-                strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
-                'SHORI_KBNかつ、新規登録の場合は、2(訂正)をセット
-                 strTextLine = strTextLine + " + ""'2'"" "
-            ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + "+ str(entityData." + "date" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + str(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + str(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + "+ str(entityData." + "str" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            If (Len(strTextLine) <= INDENT_SPACE) Then
+                strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                Dim intBuf As Integer
+                intBuf = INDENT_SPACE * 1.5
+                strText = strText + strTextLine + " + ""\n"" " + String(intBuf - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            End If
+                
             count = count + 1
         End If
     Next i
@@ -528,10 +538,10 @@ On Error GoTo Err0
         End If
         
         
-        If (arrColumn(i).strPhysicsName = "UP_DT") Then
+        If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Then
                 'UP_DTの場合は、[sysDateTime]をセット
                 strTextLine = strTextLine + "'""  + sysDateTime  + ""' "
-        ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+        ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
                 'SHORI_KBNかつ、新規登録の場合は、9(削除)をセット
                  strTextLine = strTextLine + " '9' "
         Else
@@ -551,25 +561,29 @@ On Error GoTo Err0
             strTextLine = ""
             strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
                   
-            If (arrColumn(i).strPhysicsName = "UP_DT") Then
+            If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Then
                 'UP_DTの場合は、[sysDateTime]をセット
                 strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
                 'SHORI_KBNかつ、新規登録の場合は、9(削除)をセット
                  strTextLine = strTextLine + " + ""'9'"" "
             ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + " + str(entityData." + "date" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + str(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + str(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + "+ str(entityData." + "str" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            If (INDENT_SPACE > Len(strTextLine)) Then
+                strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+            End If
             count = count + 1
         End If
     Next i
@@ -586,25 +600,30 @@ On Error GoTo Err0
             strTextLine = ""
             strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
                   
-            If (arrColumn(i).strPhysicsName = "UP_DT") Then
+            If (arrColumn(i).strPhysicsName = "UP_DT") Or (arrColumn(i).strPhysicsName = "UP_D") Then
                 'UP_DTの場合は、[sysDateTime]をセット
                 strTextLine = strTextLine + " + ""'""  + sysDateTime  + ""'"" "
-            ElseIf arrColumn(i).strPhysicsName = "SHORI_KBN" Then
+            ElseIf (arrColumn(i).strPhysicsName = "SHORI_KBN") Or (arrColumn(i).strPhysicsName = "SHORI_K") Then
                 'SHORI_KBNかつ、新規登録の場合は、9(削除)をセット
                  strTextLine = strTextLine + " + ""'9'"" "
             ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + " + str(entityData." + "date" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + str(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + str(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + " + str(entityData." + "str" + arrColumn(i).strPhysicsName + ") " + (" + ""'"" ")
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            If (INDENT_SPACE > Len(strTextLine)) Then
+                strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -726,7 +745,12 @@ On Error GoTo Err0
                 On Error GoTo Err0
             End If
             
-            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            If (INDENT_SPACE > Len(strTextLine)) Then
+                strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+            Else
+                strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+            End If
+
             count = count + 1
         End If
     Next i
@@ -755,7 +779,13 @@ On Error GoTo Err0
         Else
             On Error GoTo Err0
         End If
-        strText = strText + strTextLine + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        
+        If (INDENT_SPACE > Len(strTextLine)) Then
+            strText = strText + strTextLine + " + ""\n"" " + String(INDENT_SPACE - Len(strTextLine), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            strText = strText + strTextLine + " + ""\n"" " + " #" + arrColumn(i).strLogicalName + vbCrLf
+        End If
+
         
     Next i
     strText = strText + "            else: " + vbCrLf

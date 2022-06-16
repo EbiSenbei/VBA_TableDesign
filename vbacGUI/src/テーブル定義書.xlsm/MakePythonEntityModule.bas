@@ -5,7 +5,7 @@ Const SCHMA_NAME As String = "" 'スキーマ名
 Const COL_START_ROW As Long = 7 'カラム情報は7行目からスタート
 Const TBL_START_ROW As Long = 5 'テーブル情報は5行目からスタート
 Const SHEET_TABLE_LIST As String = "テーブル一覧表" 'テーブル一覧表のシート名
-
+Const INDENT_SPACE As Long = 100 '論理名コメントを記載するための半角スペース
 
 Public strSchemaName As String  'スキーマ名
 
@@ -65,7 +65,7 @@ On Error GoTo Err0
         Else
             On Error GoTo Err0
         End If
-        strText = strText + strTextLine + strBuf + String(41 - Len(strBuf), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
+        strText = strText + strTextLine + strBuf + String(INDENT_SPACE - Len(strTextLine + strBuf), " ") + " #" + arrColumn(i).strLogicalName + vbCrLf
     Next i
     strText = strText + vbCrLf
 
@@ -93,7 +93,15 @@ On Error GoTo Err0
         Else
             On Error GoTo Err0
         End If
-        strText = strText + strTextLine + strBuf + String(21 - Len(strBuf), " ") + " ="" + str(self." + strBuf + "))  #" + arrColumn(i).strLogicalName + vbCrLf
+        
+        Dim intBuf As Integer
+        intBuf = INDENT_SPACE * 1.5
+        If Len(strTextLine + strBuf) <= (intBuf / 4) Then
+            strText = strText + strTextLine + strBuf + String((intBuf / 4) - Len(strTextLine + strBuf), " ") + " ="" + str(self." + strBuf + ")) " + String((intBuf / 4) * 3 - Len(strTextLine + strBuf), " ") + "#" + arrColumn(i).strLogicalName + vbCrLf
+        Else
+            intBuf = INDENT_SPACE * 3
+            strText = strText + strTextLine + strBuf + String((intBuf / 4) - Len(strTextLine + strBuf), " ") + " ="" + str(self." + strBuf + ")) " + String((intBuf / 4) * 3 - Len(strTextLine + strBuf), " ") + "#" + arrColumn(i).strLogicalName + vbCrLf
+        End If
 
 
     Next i
