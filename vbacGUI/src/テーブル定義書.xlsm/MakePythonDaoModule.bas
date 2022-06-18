@@ -148,13 +148,13 @@ On Error GoTo Err0
             'SHORI_KBNかつ、新規登録の場合は、1(新規登録)をセット
              strTextLine = strTextLine + " + ""'1'"" "
         ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "float") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
         Else
             On Error GoTo Err0
         End If
@@ -201,13 +201,13 @@ On Error GoTo Err0
             'SHORI_KBNかつ、新規登録の場合は、1(新規登録)をセット
              strTextLine = strTextLine + " + ""'1'"" "
         ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "float") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
         ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-            strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+            strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
         Else
             On Error GoTo Err0
         End If
@@ -290,13 +290,13 @@ On Error GoTo Err0
                 'SHORI_KBNかつ、新規登録の場合は、2(訂正)をセット
                  strTextLine = strTextLine + " + ""'2'"" "
             ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
@@ -568,13 +568,13 @@ On Error GoTo Err0
                 'SHORI_KBNかつ、新規登録の場合は、9(削除)をセット
                  strTextLine = strTextLine + " + ""'9'"" "
             ElseIf (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "date" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "int" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "flt" + arrColumn(i).strPhysicsName + ")"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + "" + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
+                strTextLine = strTextLine + " + self.sqlCon.sanitizeSQL(entityData." + "str" + arrColumn(i).strPhysicsName + ")"
             Else
                 On Error GoTo Err0
             End If
@@ -669,22 +669,23 @@ On Error GoTo Err0
     Dim strText As String
     strText = ""
 
-    ' 参照処理-----------------------------------------------------------------------------------------
-    strText = strText + "    # " + tTbl.strLogicalName + "への参照処理 " + vbCrLf
-    strText = strText + "    def select" + tTbl.strPhysicsName + "(self"
+
+    ' 参照処理-DataFrame用----------------------------------------------------------------------------------------
+    strText = strText + "    # " + tTbl.strLogicalName + "への参照処理(DataFrame) " + vbCrLf
+    strText = strText + "    def selectDataFrame" + tTbl.strPhysicsName + "(self"
     ' 関数の引数部分を設定
     For i = 0 To lngLineCount - 1
         strTextLine = ""
         If arrColumn(i).strPrimaryKey <> "" Then
-            
             If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + ":" + "str"
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + "_From:" + "str = """""
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + "_To:" + "str = """""
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName + ":" + "int"
+                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName + ":" + "int = 0"
             ElseIf (arrColumn(i).strDataType = "float") Then
-               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName + ":" + "float"
+               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName + ":" + "float = 0.00"
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName + ":" + "str"
+               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName + ":" + "str = """""
             Else
                 On Error GoTo Err0
             End If
@@ -731,18 +732,30 @@ On Error GoTo Err0
         If arrColumn(i).strPrimaryKey <> "" Then
         '主キーの項目を指定。
             strTextLine = ""
-            strTextLine = strTextLine + "            sql += "" AND " + arrColumn(i).strPhysicsName + "="""
-                  
+            
+            '項目名を取得
+            strColName = ""
             If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
-                strTextLine = strTextLine + " + ""'"" " + "+ str(" + "date" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+                strColName = "date" + arrColumn(i).strPhysicsName
             ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
-                strTextLine = strTextLine + " + int(" + "int" + arrColumn(i).strPhysicsName + ")"
+                strColName = "int" + arrColumn(i).strPhysicsName
             ElseIf (arrColumn(i).strDataType = "float") Then
-                strTextLine = strTextLine + " + " + "flt" + arrColumn(i).strPhysicsName + ""
+                strColName = "flt" + arrColumn(i).strPhysicsName
             ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
-                strTextLine = strTextLine + " + ""N'"" " + "+ str(" + "str" + arrColumn(i).strPhysicsName + ")" + (" + ""'"" ")
+                strColName = "str" + arrColumn(i).strPhysicsName
             Else
                 On Error GoTo Err0
+            End If
+            
+            '項目単位で記載
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + "            if " + strColName + "_From != """": " + vbCrLf
+                strTextLine = strTextLine + "                sql += "" AND " + arrColumn(i).strPhysicsName + " >=""+ self.sqlCon.sanitizeSQL(" + strColName + "_From)" + vbCrLf
+                strTextLine = strTextLine + "            if " + strColName + "_To != """": " + vbCrLf
+                strTextLine = strTextLine + "                sql += "" AND " + arrColumn(i).strPhysicsName + " <=""+ self.sqlCon.sanitizeSQL(" + strColName + "_To)"
+            Else
+                strTextLine = strTextLine + "            if " + strColName + " != """": " + vbCrLf
+                strTextLine = strTextLine + "                sql += "" AND " + arrColumn(i).strPhysicsName + "=""+ self.sqlCon.sanitizeSQL(" + strColName + ")"
             End If
             
             If (INDENT_SPACE > Len(strTextLine)) Then
@@ -759,6 +772,74 @@ On Error GoTo Err0
     strText = strText + "" + vbCrLf
     strText = strText + "            # SQLを実行" + vbCrLf
     strText = strText + "            df = self.sqlCon.executeSql(sql)" + vbCrLf
+    strText = strText + "" + vbCrLf
+    strText = strText + "            return df" + vbCrLf
+    strText = strText + "        except Exception as e:" + vbCrLf
+    strText = strText + "            print(""Error:"" + str(e))" + vbCrLf
+    strText = strText + "            raise e " + vbCrLf
+    strText = strText + "" + vbCrLf
+    strText = strText + "" + vbCrLf
+
+    ' 参照処理-----------------------------------------------------------------------------------------
+    strText = strText + "    # " + tTbl.strLogicalName + "への参照処理(DataFrame) " + vbCrLf
+    strText = strText + "    def select" + tTbl.strPhysicsName + "(self"
+    ' 関数の引数部分を設定
+    For i = 0 To lngLineCount - 1
+        strTextLine = ""
+        If arrColumn(i).strPrimaryKey <> "" Then
+            
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + "_From:" + "str = """""
+                strTextLine = strTextLine + ",date" + arrColumn(i).strPhysicsName + "_To:" + "str = """""
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strTextLine + ",int" + arrColumn(i).strPhysicsName + ":" + "int = 0"
+            ElseIf (arrColumn(i).strDataType = "float") Then
+               strTextLine = strTextLine + ",flt" + arrColumn(i).strPhysicsName + ":" + "float = 0.00"
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+               strTextLine = strTextLine + ",str" + arrColumn(i).strPhysicsName + ":" + "str = """""
+            Else
+                On Error GoTo Err0
+            End If
+        End If
+        
+        strText = strText + strTextLine
+    Next i
+    strText = strText + "):" + vbCrLf
+    strText = strText + vbCrLf
+    strText = strText + "        try: " + vbCrLf
+    
+    ' selectDataFrameXXXXXXXXの引数部分を設定
+    strTextLine = ""
+    strBuf = ""
+    For i = 0 To lngLineCount - 1
+        strBuf = ""
+        If arrColumn(i).strPrimaryKey <> "" Then
+            
+            If strTextLine = "" Then
+                strBuf = strTextLine + ""
+            Else
+                strBuf = strTextLine + ","
+            End If
+
+            If (arrColumn(i).strDataType = "DATE") Or (arrColumn(i).strDataType = "datetime") Then
+                strTextLine = strBuf + "date" + arrColumn(i).strPhysicsName + "_From" + ",date" + arrColumn(i).strPhysicsName + "_To"
+            ElseIf (arrColumn(i).strDataType = "NUMBER") Or (arrColumn(i).strDataType = "int") Then
+                strTextLine = strBuf + "int" + arrColumn(i).strPhysicsName
+            ElseIf (arrColumn(i).strDataType = "float") Then
+               strTextLine = strBuf + "flt" + arrColumn(i).strPhysicsName
+            ElseIf (arrColumn(i).strDataType = "VARCHAR2") Or (arrColumn(i).strDataType = "nvarchar") Or (arrColumn(i).strDataType = "varchar") Then
+               strTextLine = strBuf + "str" + arrColumn(i).strPhysicsName
+            Else
+                On Error GoTo Err0
+            End If
+        End If
+    Next i
+
+
+    'SQLを実行
+    strText = strText + "" + vbCrLf
+    strText = strText + "            # SQLを実行" + vbCrLf
+    strText = strText + "            df = self.selectDataFrame" + tTbl.strPhysicsName + "(" + strTextLine + ")" + vbCrLf
     strText = strText + "" + vbCrLf
     strText = strText + "            # SQL実行結果を取得" + vbCrLf
     strText = strText + "            entityResult: " + tTbl.strPhysicsName + "_Entity" + " = " + tTbl.strPhysicsName + "_Entity()" + vbCrLf
